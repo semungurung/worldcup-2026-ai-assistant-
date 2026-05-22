@@ -1,0 +1,17 @@
+feature,level,meaning
+model_strength_score,team,"Weighted blended team quality, ranking, form, squad, scorer, host and injury signal."
+data_confidence_0_1,team,How complete the current public data is for this team.
+rank_strength_0_100,team,Inverse FIFA rank scaled so higher is better.
+form_strength_0_100,team,Recency-weighted points from recent international matches.
+opponent_adjusted_form_0_100,team,Recent form adjusted by opponent FIFA rank strength.
+attack_efficiency_proxy,team,"Blended goals-for, scorer-depth and attack-rating feature."
+defense_resilience_proxy,team,"Blended clean-sheet, goals-against and defense-rating feature."
+source_reliability_0_1,team,"Reliability signal based on ranking, form, scorer and video source coverage."
+fitness_risk_score_0_100,team,Higher score means more squad/injury/availability risk.
+goal_diff_per_match,team,Recent goal difference normalized by matches counted.
+fitness_availability_0_1,team,Available player share from current squad rows.
+scorer_concentration_top5,team,Share of recent national-team goals coming from top five scorers.
+relevant_video_score,team,Count-weighted metadata signal from relevant official/media video sources.
+strength_delta_a_minus_b,match,Team A model strength minus Team B model strength.
+attack_vs_defense_delta_a,match,Team A attack rating against Team B defense rating.
+h2h_edge_a_minus_b,match,Historical head-to-head win edge for Team A.

@@ -1,0 +1,9 @@
+match_id,group,team_a,team_b,historical_matches,team_a_wins,draws,team_b_wins,last_played
+A1,A,Mexico,South Africa,4,2,1,1,2010-06-11
+A2,A,Korea Republic,Czechia,3,1,1,1,2016-06-05
+B1,B,Canada,Bosnia and Herzegovina,0,0,0,0,
+D1,D,USA,Paraguay,9,5,2,2,2025-11-15
+C1,C,Haiti,Scotland,0,0,0,0,
+D2,D,Australia,Turkiye,2,0,0,2,2004-05-24
+C2,C,Brazil,Morocco,3,2,0,1,2023-03-25
+B2,B,Qatar,Switzerland,1,1,0,0,2018-11-14

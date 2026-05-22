@@ -1,0 +1,6 @@
+stage,input,output,copyright_safe_design
+Discovery,"official channel URLs, RSS/API metadata, Kaggle dataset catalog",source reliability and rights posture,"store links and metadata, not copied video files"
+Metadata filtering,titles descriptions dates teams keywords,ranked relevant clips for each team or match,use public metadata and link back to platform
+Transcript analysis,captions/transcripts where API or platform allows access,"training notes, tactical themes, player mentions","store short derived facts and timestamps, not full copyrighted transcripts unless licence permits"
+Video analysis,licensed clips or open Kaggle video datasets,"action recognition, ball/player tracking, event detection",only download/process video when dataset licence or rights agreement allows it
+App display,video metadata rows and source URLs,embedded or linked source cards with analysis notes,embed official player where allowed; do not rehost footage

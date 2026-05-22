@@ -1,0 +1,7 @@
+platform,allowed_v1_use,blocked_without_permission,recommended_access_method,notes
+YouTube,Public video metadata links embeds and transcripts when available,Downloading or rehosting copyrighted video files,YouTube Data API or public channel RSS feeds,Use video URLs/embed IDs and metadata; keep footage on YouTube.
+Kaggle,Dataset metadata and datasets permitted by their licence and API credentials,Bypassing login rate limits or dataset licence restrictions,Kaggle API with user token and dataset licence review,Prefer CC BY/CC0/MIT/open datasets for model training.
+Facebook,Manually verified public links and API-approved data,Automated scraping without Meta written permission,Meta Graph API or written-permission research access,Do not scrape pages/posts directly.
+Instagram,Manually verified public links and API-approved data,Automated scraping without Meta written permission,Instagram Graph API for approved accounts/use cases,Use source links only unless API permission is granted.
+TV broadcasters,Official article/video page metadata and links where terms allow,Downloading/rehosting broadcasts or bypassing geo/paywalls,Official APIs RSS feeds partnerships or manual link catalog,Use rights notes and do not store broadcast footage.
+FIFA+,Official links metadata embeds where available,Downloading match footage or restricted content,FIFA public pages official feeds or licensed partnership,Ideal source for legit World Cup highlights if permitted.

@@ -1,0 +1,13 @@
+source_name,platform,team_or_scope,channel_url,handle_or_id,source_type,rights_posture,priority,notes
+FIFA,YouTube,Global,https://www.youtube.com/@fifa,@fifa,official,metadata_embed_only,1,Official FIFA channel for World Cup highlights features and interviews.
+FIFA Plus,Web,Global,https://www.fifa.com/fifaplus,,official,link_metadata_only,1,Use links and metadata only unless licensed.
+England,YouTube,England,https://www.youtube.com/@england,@england,official,metadata_embed_only,1,Official national team channel.
+US Soccer,YouTube,USA,https://www.youtube.com/@ussoccer,@ussoccer,official,metadata_embed_only,1,Official national team channel.
+Canada Soccer,YouTube,Canada,https://www.youtube.com/@canadasoccertv,@canadasoccertv,official,metadata_embed_only,1,Official national team channel.
+U.S. Soccer Federation,Web,USA,https://www.ussoccer.com,,official,link_metadata_only,2,Useful for press releases and match reports.
+England Football,Web,England,https://www.englandfootball.com,,official,link_metadata_only,2,Useful for squads training and match reports.
+ESPN FC,YouTube,Media,https://www.youtube.com/@ESPNFC,@ESPNFC,media,metadata_embed_only,3,Media analysis source; not training footage ownership.
+Sky Sports Premier League,YouTube,Media,https://www.youtube.com/@skysportspremierleague,@skysportspremierleague,media,metadata_embed_only,3,Broadcaster highlights and analysis metadata only.
+beIN SPORTS,YouTube,Media,https://www.youtube.com/@beinsports,@beinsports,media,metadata_embed_only,3,Broadcaster clips and interviews metadata only.
+Instagram Official Team Accounts,Instagram,Multiple,,,,manual_api_only,4,Do not scrape; add manually verified URLs or use approved API.
+Facebook Official Team Pages,Facebook,Multiple,,,,manual_api_only,4,Do not scrape; add manually verified URLs or use approved API.

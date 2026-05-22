@@ -1,0 +1,9 @@
+match_id,date,group,team_a,team_b,venue
+A1,2026-06-11,A,Mexico,South Africa,Mexico City Stadium
+A2,2026-06-11,A,Korea Republic,Czechia,Estadio Guadalajara
+B1,2026-06-12,B,Canada,Bosnia and Herzegovina,Toronto Stadium
+D1,2026-06-12,D,USA,Paraguay,Los Angeles Stadium
+C1,2026-06-13,C,Haiti,Scotland,Boston Stadium
+D2,2026-06-13,D,Australia,Turkiye,BC Place Vancouver
+C2,2026-06-13,C,Brazil,Morocco,New York New Jersey Stadium
+B2,2026-06-13,B,Qatar,Switzerland,San Francisco Bay Area Stadium

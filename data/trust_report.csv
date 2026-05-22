@@ -1,0 +1,9 @@
+check,status,severity,detail
+team_count,pass,high,48 teams in feature store
+missing_model_strength,pass,high,0 missing model strength values
+missing_confidence,pass,high,0 missing confidence values
+low_squad_completeness,warn,medium,48 teams below 50% squad placeholder coverage
+video_signal_sparse,warn,low,0 team-specific cleaned video rows
+match_feature_rows,pass,high,8 match feature rows generated
+confidence_floor,pass,medium,0 teams below 0.45 confidence
+leakage_guardrail,pass,high,Feature builder uses completed historical results and pre-match fixture/team/player/source metadata only

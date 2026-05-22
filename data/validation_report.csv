@@ -1,0 +1,20 @@
+check,status,severity,details
+teams_48,pass,high,48 teams found
+teams_unique,pass,high,Team names are unique
+team_ratings_range,pass,high,All rating columns should be 0-100
+fixture_team_validity,pass,high,All fixtures use known teams
+player_team_validity,pass,medium,All player rows map to known teams
+player_rating_range,pass,medium,Player role ratings should be 0-100
+injury_team_validity,pass,medium,All injury rows map to known teams
+event_xg_range,pass,medium,Match-event xG must be 0-1
+historical_no_future_rows,pass,high,0 future rows
+recent_form_coverage,pass,medium,48 team form rows
+ranking_coverage,pass,medium,48 ranking rows
+scorer_no_own_goals,pass,medium,Own goals excluded from scorer-form features
+video_relevance_filter,pass,high,Bad terms found: none
+team_feature_coverage,pass,high,48 team feature rows
+feature_no_nulls,pass,high,0 null cells in team feature store
+match_feature_deltas,pass,high,Required match-delta features exist
+known_limit_squad_placeholders,warn,medium,"Final squads are not fully populated yet, so squad-derived features remain low-confidence"
+known_limit_video_sparsity,warn,low,2 high-confidence video metadata rows after strict cleaning
+leakage_guardrail,pass,high,Generated features avoid final World Cup outcome labels and use completed historical/current metadata only

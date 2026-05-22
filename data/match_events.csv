@@ -1,0 +1,6 @@
+match_id,minute,team,player,event_type,xg,description
+sample_001,12,USA,TBD primary winger,shot,0.09,Early cutback creates the first meaningful chance.
+sample_001,31,Paraguay,TBD forward,yellow_card,0.00,Late challenge stops a transition.
+sample_001,44,USA,TBD striker,goal,0.32,Low finish after a midfield regain.
+sample_001,61,Paraguay,TBD midfielder,substitution,0.00,Fresh legs added to press higher.
+sample_001,78,Paraguay,TBD forward,big_chance,0.41,Header from close range is saved.

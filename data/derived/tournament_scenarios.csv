@@ -1,0 +1,25 @@
+scenario_type,teams,probability
+semi_finalists,Argentina | England | France | Spain,0.018
+semi_finalists,Argentina | France | Portugal | Spain,0.014
+semi_finalists,Argentina | France | Netherlands | Spain,0.012333333333333333
+semi_finalists,Argentina | England | France | Netherlands,0.009666666666666667
+semi_finalists,Argentina | England | France | Portugal,0.009333333333333334
+semi_finalists,Argentina | Belgium | France | Spain,0.008
+semi_finalists,Argentina | England | Portugal | Spain,0.007666666666666666
+semi_finalists,England | France | Portugal | Spain,0.007666666666666666
+semi_finalists,Argentina | Netherlands | Portugal | Spain,0.006666666666666667
+semi_finalists,Argentina | England | Netherlands | Spain,0.006333333333333333
+semi_finalists,Argentina | England | France | Morocco,0.006
+semi_finalists,Argentina | England | France | Germany,0.006
+finalists,Argentina | Spain,0.084
+finalists,France | Spain,0.07033333333333333
+finalists,Argentina | France,0.06333333333333334
+finalists,Argentina | England,0.042666666666666665
+finalists,England | France,0.03966666666666667
+finalists,England | Spain,0.03833333333333333
+finalists,France | Portugal,0.036333333333333336
+finalists,Portugal | Spain,0.036
+finalists,Argentina | Portugal,0.036
+finalists,Argentina | Netherlands,0.03166666666666667
+finalists,France | Netherlands,0.029
+finalists,Netherlands | Spain,0.02033333333333333

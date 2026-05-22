@@ -1,0 +1,9 @@
+match_id,group,team_a,team_b,team_a_strength,team_b_strength,strength_delta_a_minus_b,rank_delta_a_minus_b,form_delta_a_minus_b,opponent_adjusted_form_delta_a_minus_b,attack_efficiency_delta_a_minus_b,defense_resilience_delta_a_minus_b,attack_vs_defense_delta_a,attack_vs_defense_delta_b,fitness_delta_a_minus_b,fitness_risk_delta_a_minus_b,squad_depth_delta_a_minus_b,scorer_goal_delta_a_minus_b,data_confidence_min,source_reliability_min,historical_matches,h2h_edge_a_minus_b
+A1,A,Mexico,South Africa,61.942,45.246,16.696,-45,4.19,12.055,-9.967,12.667,6,-9,1.0,-4.375,24.669,3,0.57,0.85,4,0.25
+A2,A,Korea Republic,Czechia,57.448,55.269,2.178,-16,-2.89,7.584,-9.063,-2.144,1,-2,0.0,0.0,0.55,9,0.59,0.85,3,0.0
+B1,B,Canada,Bosnia and Herzegovina,57.642,47.409,10.233,-35,-1.78,0.806,-11.466,41.945,5,1,0.0,0.0,1.65,-5,0.59,0.85,0,0.0
+D1,D,USA,Paraguay,58.12,50.265,7.855,-24,4.12,6.278,22.212,-36.145,2,-4,0.0,80.0,24.069,24,0.545,0.85,9,0.333
+C1,C,Haiti,Scotland,34.857,51.083,-16.226,40,-6.25,-10.0,-19.179,-6.889,-13,12,0.0,0.0,-6.05,-23,0.55,0.85,0,0.0
+D2,D,Australia,Turkiye,59.719,65.496,-5.777,5,-10.79,-0.194,-15.701,15.189,-5,6,0.0,0.0,-3.3,-17,0.62,0.85,2,-1.0
+C2,C,Brazil,Morocco,70.32,72.414,-2.094,-2,-25.1,-2.138,-1.111,-32.022,7,-4,0.0,3.125,5.35,-4,0.603,0.85,3,0.333
+B2,B,Qatar,Switzerland,38.244,65.535,-27.291,36,-35.44,-37.805,-36.124,-48.8,-14,12,0.0,0.0,-7.15,-7,0.59,0.85,1,1.0

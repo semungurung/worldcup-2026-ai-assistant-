@@ -1,0 +1,5 @@
+file,rows,columns
+derived/team_feature_store.csv,48,74
+derived/match_feature_store.csv,8,22
+derived/feature_dictionary.csv,16,3
+trust_report.csv,8,4

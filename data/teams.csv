@@ -1,0 +1,49 @@
+team,group,confederation,host,power_rating,form_index,attack,midfield,defense,depth,tactical_style
+Mexico,A,Concacaf,1,79,71,76,78,77,74,front-foot possession
+South Africa,A,CAF,0,70,68,68,69,70,66,compact transitions
+Korea Republic,A,AFC,0,78,73,77,76,75,73,fast vertical attacks
+Czechia,A,UEFA,0,76,70,73,75,76,72,direct pressing
+Canada,B,Concacaf,1,75,70,75,72,71,69,wide transition attacks
+Bosnia and Herzegovina,B,UEFA,0,72,66,72,71,70,66,mid-block possession
+Qatar,B,AFC,0,69,65,68,68,67,65,compact possession
+Switzerland,B,UEFA,0,82,75,79,81,82,78,balanced pressing
+Brazil,C,CONMEBOL,0,90,79,91,87,86,86,technical possession
+Morocco,C,CAF,0,84,78,82,83,84,79,disciplined transition
+Haiti,C,Concacaf,0,65,64,64,63,62,60,direct counterattack
+Scotland,C,UEFA,0,77,72,74,76,77,71,physical wide play
+USA,D,Concacaf,1,80,73,79,78,77,76,athletic pressing
+Paraguay,D,CONMEBOL,0,76,70,73,74,77,70,defensive transitions
+Australia,D,AFC,0,75,71,72,73,76,70,set-piece directness
+Turkiye,D,UEFA,0,81,76,82,80,77,76,high-tempo possession
+Germany,E,UEFA,0,88,80,87,88,84,84,structured possession
+Curacao,E,Concacaf,0,66,65,65,64,63,61,compact counterattack
+Cote d'Ivoire,E,CAF,0,80,74,80,78,77,74,power transitions
+Ecuador,E,CONMEBOL,0,79,73,76,78,79,73,intense pressing
+Netherlands,F,UEFA,0,87,80,85,86,86,82,positional possession
+Japan,F,AFC,0,83,78,82,82,80,78,technical pressing
+Sweden,F,UEFA,0,78,71,75,77,78,73,structured directness
+Tunisia,F,CAF,0,72,68,69,71,72,67,compact low block
+Belgium,G,UEFA,0,85,77,85,83,81,79,creative possession
+Egypt,G,CAF,0,79,72,80,76,75,72,direct star-led attacks
+IR Iran,G,AFC,0,77,71,75,75,76,70,compact counterattack
+New Zealand,G,OFC,0,66,64,64,64,66,61,set-piece directness
+Spain,H,UEFA,0,89,82,88,90,85,85,positional possession
+Cabo Verde,H,CAF,0,68,67,67,66,66,63,organized transitions
+Saudi Arabia,H,AFC,0,73,68,71,72,71,68,patient possession
+Uruguay,H,CONMEBOL,0,84,78,82,83,84,78,intense pressing
+France,I,UEFA,0,91,82,91,88,87,87,explosive transitions
+Senegal,I,CAF,0,82,76,80,80,82,76,physical transition
+Iraq,I,AFC,0,70,67,68,69,70,65,compact directness
+Norway,I,UEFA,0,82,77,84,80,78,75,direct attacking
+Argentina,J,CONMEBOL,0,90,81,89,89,86,84,controlled possession
+Algeria,J,CAF,0,78,72,78,76,74,71,technical transitions
+Austria,J,UEFA,0,80,76,78,80,79,74,aggressive pressing
+Jordan,J,AFC,0,69,66,68,67,68,63,deep counterattack
+Portugal,K,UEFA,0,89,81,90,87,84,85,creative possession
+Congo DR,K,CAF,0,72,69,71,70,71,67,physical transitions
+Uzbekistan,K,AFC,0,71,68,70,70,69,65,compact pressing
+Colombia,K,CONMEBOL,0,83,78,82,82,80,77,expressive possession
+England,L,UEFA,0,88,80,88,86,84,85,balanced possession
+Croatia,L,UEFA,0,83,76,79,85,80,77,midfield control
+Ghana,L,CAF,0,77,70,76,75,74,71,vertical transitions
+Panama,L,Concacaf,0,72,69,70,70,70,66,organized pressing
