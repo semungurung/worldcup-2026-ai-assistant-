@@ -2,7 +2,7 @@ file,rows
 video_channel_seeds.csv,12
 derived/video_channel_index.csv,12
 derived/video_metadata.csv,105
-derived/video_metadata_relevant.csv,2
+derived/video_metadata_relevant.csv,36
 kaggle_video_dataset_catalog.csv,9
 video_platform_policy.csv,6
 video_analysis_design.csv,5

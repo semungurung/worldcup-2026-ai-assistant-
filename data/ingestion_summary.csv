@@ -1,11 +1,11 @@
 file,rows
-raw/international_results.csv,49328
+raw/international_results.csv,49450
 raw/international_goalscorers.csv,47601
-raw/international_shootouts.csv,677
-derived/worldcup_team_historical_results.csv,25851
+raw/international_shootouts.csv,678
+derived/worldcup_team_historical_results.csv,25915
 derived/recent_team_form.csv,48
 derived/fixture_head_to_head.csv,8
-derived/recent_scorer_form.csv,955
+derived/recent_scorer_form.csv,875
 derived/fifa_rankings_wc_teams.csv,48
 derived/teams_enriched.csv,48
 data_sources.csv,4

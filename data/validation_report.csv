@@ -16,5 +16,5 @@ team_feature_coverage,pass,high,48 team feature rows
 feature_no_nulls,pass,high,0 null cells in team feature store
 match_feature_deltas,pass,high,Required match-delta features exist
 known_limit_squad_placeholders,warn,medium,"Final squads are not fully populated yet, so squad-derived features remain low-confidence"
-known_limit_video_sparsity,warn,low,2 high-confidence video metadata rows after strict cleaning
+known_limit_video_sparsity,pass,low,27 high-confidence video metadata rows after strict cleaning
 leakage_guardrail,pass,high,Generated features avoid final World Cup outcome labels and use completed historical/current metadata only

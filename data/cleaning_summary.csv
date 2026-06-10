@@ -4,8 +4,8 @@ fixtures,8,cleaned/fixtures_clean.csv
 players,12,cleaned/players_clean.csv
 injuries,2,cleaned/injuries_clean.csv
 match_events,5,cleaned/match_events_clean.csv
-historical_results,25851,cleaned/worldcup_team_historical_results_clean.csv
+historical_results,25915,cleaned/worldcup_team_historical_results_clean.csv
 recent_form,48,cleaned/recent_team_form_clean.csv
 recent_scorers,875,cleaned/recent_scorer_form_clean.csv
-video_metadata_relevant,2,cleaned/video_metadata_relevant_clean.csv
+video_metadata_relevant,27,cleaned/video_metadata_relevant_clean.csv
 rankings,48,cleaned/fifa_rankings_wc_teams_clean.csv

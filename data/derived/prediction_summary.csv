@@ -1,5 +1,5 @@
 prediction,teams,basis,top_probability
-Most likely semi-finalists,Argentina | Spain | France | England,semi_final_probability,0.535
-Most likely finalists,Argentina | France,final_probability,0.3546666666666667
-Most likely winner,Argentina,winner_probability,0.21766666666666667
-Dark horses,Switzerland | Turkiye | Austria | Cote d'Ivoire | Mexico | Algeria | Colombia | Uruguay,semi_final_probability,0.07233333333333333
+Most likely semi-finalists,Argentina | Spain | France | Portugal,semi_final_probability,0.5093333333333333
+Most likely finalists,Argentina | Spain,final_probability,0.35033333333333333
+Most likely winner,Argentina,winner_probability,0.22766666666666666
+Dark horses,Switzerland | Turkiye | Colombia | Cote d'Ivoire | Senegal | Norway | Algeria | Korea Republic,semi_final_probability,0.06133333333333333

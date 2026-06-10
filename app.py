@@ -47,7 +47,7 @@ from src.simulator import simulate_group_stage, tournament_winner_projection
 from src.tactical_analyzer import generate_match_report, momentum_timeline, top_moments
 
 
-st.set_page_config(page_title="World Cup 2026 AI Assistant", layout="wide")
+st.set_page_config(page_title="World Cup 2026 AI Predictor", layout="wide")
 
 
 def image_as_data_uri(path: Path) -> str:
@@ -361,7 +361,7 @@ st.markdown(
         margin: 0.5rem 0 1rem 0;
         color: #ffffff;
         background:
-            linear-gradient(90deg, rgba(3, 11, 20, 0.94), rgba(5, 21, 36, 0.80)),
+            linear-gradient(90deg, rgba(1, 7, 13, 0.98), rgba(3, 14, 25, 0.92), rgba(3, 14, 25, 0.72)),
             var(--hero-image),
             linear-gradient(135deg, #0a2137, #1769c2);
         background-size: cover;
@@ -370,15 +370,27 @@ st.markdown(
         display: flex;
         align-items: flex-end;
     }
+    .photo-panel > div {
+        background: rgba(12, 105, 67, 0.94);
+        border: 1px solid rgba(188, 239, 210, 0.72);
+        border-radius: 8px;
+        padding: 0.85rem 1rem;
+        max-width: min(760px, 100%);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+    }
     .photo-panel strong {
         display: block;
         font-size: 1.55rem;
         line-height: 1.1;
         margin-bottom: 0.35rem;
-        color: #ffffff;
+        color: #ffffff !important;
+        font-weight: 900;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.72);
     }
     .photo-panel span {
-        color: rgba(255,255,255,0.86);
+        color: rgba(255,255,255,0.94) !important;
+        font-weight: 650;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.68);
     }
     .stMarkdown, .stText, p, label, span {
         color: #1d2b3a;
@@ -396,6 +408,20 @@ st.markdown(
         border-radius: 8px;
         box-shadow: 0 8px 24px rgba(10, 28, 46, 0.07);
         overflow-x: auto;
+    }
+    div[data-testid="stDataFrame"] [role="columnheader"],
+    div[data-testid="stDataFrame"] [role="columnheader"] span,
+    div[data-testid="stDataFrame"] [data-testid="stDataFrameResizable"] {
+        color: #142231 !important;
+        background: #eef5fb !important;
+        font-weight: 800 !important;
+    }
+    div[data-testid="stDataFrame"] [role="gridcell"],
+    div[data-testid="stDataFrame"] [role="gridcell"] span {
+        color: #1d2b3a !important;
+    }
+    div[data-testid="stDataFrame"] [role="row"]:first-child {
+        background: #eef5fb !important;
     }
     [data-testid="stVegaLiteChart"] {
         background: rgba(255, 255, 255, 0.98);
@@ -530,6 +556,64 @@ st.markdown(
         color: var(--wc-muted);
         font-size: 0.82rem;
     }
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 0.75rem;
+        margin: 0.5rem 0 1rem 0;
+    }
+    .compare-card {
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid rgba(213, 222, 232, 0.95);
+        border-radius: 8px;
+        padding: 0.95rem;
+        box-shadow: 0 12px 30px rgba(8, 24, 42, 0.10);
+    }
+    .compare-card h3 {
+        margin: 0 0 0.35rem 0;
+        font-size: 1.18rem;
+    }
+    .compare-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        border-top: 1px solid #e4ebf2;
+        padding-top: 0.42rem;
+        margin-top: 0.42rem;
+        font-size: 0.86rem;
+    }
+    .bracket-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 0.75rem;
+        margin: 0.6rem 0 1rem 0;
+    }
+    .bracket-col {
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid rgba(213, 222, 232, 0.95);
+        border-radius: 8px;
+        padding: 0.8rem;
+        box-shadow: 0 12px 30px rgba(8, 24, 42, 0.10);
+    }
+    .bracket-col strong {
+        display: block;
+        margin-bottom: 0.45rem;
+        font-size: 0.86rem;
+        text-transform: uppercase;
+        color: #536579;
+    }
+    .bracket-team {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.55rem;
+        border: 1px solid #e2ebf3;
+        border-radius: 8px;
+        padding: 0.42rem 0.5rem;
+        margin-bottom: 0.38rem;
+        background: #f8fbff;
+        font-size: 0.84rem;
+        font-weight: 750;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -573,6 +657,137 @@ def visual_tile(label: str, value: str, note: str) -> str:
         f"<div class='tile-note'>{html.escape(note)}</div>"
         "</div>"
     )
+
+
+def probability_chart_frame(frame: pd.DataFrame, probability_column: str, top_n: int = 12) -> pd.DataFrame:
+    if frame.empty or probability_column not in frame.columns:
+        return pd.DataFrame()
+    view = frame.sort_values(probability_column, ascending=False).head(top_n).copy()
+    view["probability_percent"] = view[probability_column] * 100
+    return view[["team", "probability_percent"]].set_index("team")
+
+
+def team_feature_row(team: str) -> pd.Series | None:
+    if team_feature_store.empty:
+        return None
+    rows = team_feature_store[team_feature_store["team"] == team]
+    if rows.empty:
+        return None
+    return rows.iloc[0]
+
+
+def round_probability_row(team: str) -> pd.Series | None:
+    if round_probabilities.empty:
+        return None
+    rows = round_probabilities[round_probabilities["team"] == team]
+    if rows.empty:
+        return None
+    return rows.iloc[0]
+
+
+EXPLAINABLE_FEATURES = [
+    ("rank_strength_0_100", "FIFA/rank strength", 0.22, "higher"),
+    ("form_strength_0_100", "Recent form", 0.18, "higher"),
+    ("opponent_adjusted_form_0_100", "Opponent-adjusted form", 0.16, "higher"),
+    ("attack_efficiency_proxy", "Attack efficiency", 0.13, "higher"),
+    ("defense_resilience_proxy", "Defensive resilience", 0.13, "higher"),
+    ("squad_depth_proxy", "Squad depth", 0.08, "higher"),
+    ("fitness_risk_score_0_100", "Fitness risk", -0.06, "lower"),
+    ("source_reliability_0_1", "Source reliability", 4.0, "higher"),
+]
+
+
+def explain_team_features(team: str) -> pd.DataFrame:
+    row = team_feature_row(team)
+    if row is None:
+        return pd.DataFrame()
+    records = []
+    for column, label, weight, direction in EXPLAINABLE_FEATURES:
+        if column not in team_feature_store.columns:
+            continue
+        values = pd.to_numeric(team_feature_store[column], errors="coerce")
+        value = pd.to_numeric(pd.Series([row.get(column)]), errors="coerce").iloc[0]
+        if pd.isna(value) or values.dropna().empty:
+            continue
+        baseline = float(values.mean())
+        contribution = (float(value) - baseline) * weight
+        records.append(
+            {
+                "feature": label,
+                "raw_value": float(value),
+                "baseline": baseline,
+                "impact_points": contribution,
+                "model_direction": direction,
+            }
+        )
+    return pd.DataFrame(records).sort_values("impact_points", ascending=False)
+
+
+def compare_teams_frame(team_a: str, team_b: str) -> pd.DataFrame:
+    rows = team_feature_store[team_feature_store["team"].isin([team_a, team_b])] if not team_feature_store.empty else pd.DataFrame()
+    if rows.empty:
+        return pd.DataFrame()
+    metrics = [
+        ("model_strength_score", "Model strength"),
+        ("winner_probability", "Winner probability"),
+        ("semi_final_probability", "Semi-final probability"),
+        ("opponent_adjusted_form_0_100", "Adjusted form"),
+        ("attack_efficiency_proxy", "Attack efficiency"),
+        ("defense_resilience_proxy", "Defensive resilience"),
+        ("fitness_risk_score_0_100", "Fitness risk"),
+        ("data_confidence_0_1", "Data confidence"),
+    ]
+    merged = rows.copy()
+    if not round_probabilities.empty:
+        merged = merged.merge(
+            round_probabilities[["team", "winner_probability", "semi_final_probability"]],
+            on="team",
+            how="left",
+        )
+    output = []
+    by_team = merged.set_index("team")
+    for column, label in metrics:
+        if column not in by_team.columns:
+            continue
+        value_a = pd.to_numeric(pd.Series([by_team.loc[team_a, column]]), errors="coerce").iloc[0] if team_a in by_team.index else None
+        value_b = pd.to_numeric(pd.Series([by_team.loc[team_b, column]]), errors="coerce").iloc[0] if team_b in by_team.index else None
+        if pd.isna(value_a) or pd.isna(value_b):
+            continue
+        output.append(
+            {
+                "metric": label,
+                team_a: float(value_a),
+                team_b: float(value_b),
+                "edge": team_a if value_a > value_b else team_b if value_b > value_a else "Even",
+                "gap": abs(float(value_a) - float(value_b)),
+            }
+        )
+    return pd.DataFrame(output)
+
+
+def bracket_html() -> str:
+    if round_probabilities.empty:
+        return "<div class='insight-box'>Run tournament predictions to populate the bracket view.</div>"
+    rounds = [
+        ("Round of 32", "round_of_32_probability", 12),
+        ("Round of 16", "round_of_16_probability", 10),
+        ("Quarter-finals", "quarter_final_probability", 8),
+        ("Semi-finals", "semi_final_probability", 4),
+        ("Final", "final_probability", 2),
+        ("Champion", "winner_probability", 1),
+    ]
+    columns = []
+    for label, column, count in rounds:
+        teams_html = ""
+        for row in round_probabilities.sort_values(column, ascending=False).head(count).itertuples():
+            teams_html += (
+                "<div class='bracket-team'>"
+                f"<span>{html.escape(row.team)}</span>"
+                f"<span>{getattr(row, column):.1%}</span>"
+                "</div>"
+            )
+        columns.append(f"<div class='bracket-col'><strong>{html.escape(label)}</strong>{teams_html}</div>")
+    return "<div class='bracket-grid'>" + "".join(columns) + "</div>"
 
 
 def photo_panel(title: str, note: str) -> None:
@@ -635,6 +850,22 @@ def answer_match_assistant(query: str) -> str:
             return f"Current winner projection top five: {teams_text}."
         return "Winner probability data is not loaded yet."
 
+    if any(term in q for term in ["round of 16", "quarter", "knockout", "bracket", "advance"]):
+        if not round_probabilities.empty:
+            if found_teams:
+                row = round_probability_row(found_teams[0])
+                if row is not None:
+                    return (
+                        f"{found_teams[0]} path probabilities: R32 {row['round_of_32_probability']:.1%}, "
+                        f"R16 {row['round_of_16_probability']:.1%}, QF {row['quarter_final_probability']:.1%}, "
+                        f"SF {row['semi_final_probability']:.1%}, Final {row['final_probability']:.1%}, "
+                        f"Winner {row['winner_probability']:.1%}."
+                    )
+            top = round_probabilities.sort_values("round_of_16_probability", ascending=False).head(8)
+            teams_text = ", ".join(f"{row.team} ({row.round_of_16_probability:.1%})" for row in top.itertuples())
+            return f"Most likely Round of 16 teams in the current bracket projection: {teams_text}."
+        return "Bracket probability data is not loaded yet."
+
     if any(term in q for term in ["dark horse", "dark horses", "surprise", "underdog"]):
         if not round_probabilities.empty:
             merged = round_probabilities.merge(
@@ -662,6 +893,20 @@ def answer_match_assistant(query: str) -> str:
             f"{warn_count} warning(s). Key warnings are incomplete final squads and sparse strict video metadata."
         )
 
+    if any(word in q for word in ["why", "explain", "shap", "driver", "because"]):
+        target = found_teams[0] if found_teams else None
+        if target:
+            explanation = explain_team_features(target).head(4)
+            if not explanation.empty:
+                drivers = ", ".join(
+                    f"{row.feature} ({row.impact_points:+.1f})" for row in explanation.itertuples()
+                )
+                return (
+                    f"{target}'s model score is mainly driven by: {drivers}. "
+                    "These are SHAP-style additive impacts against the current tournament baseline, not a black-box SHAP library output."
+                )
+        return "Ask 'why Argentina' or 'explain France' and I will show the strongest model drivers."
+
     if any(word in q for word in ["injury", "injuries", "fitness"]):
         if found_teams and not team_feature_store.empty:
             row = team_feature_store[team_feature_store["team"] == found_teams[0]]
@@ -677,6 +922,13 @@ def answer_match_assistant(query: str) -> str:
     if len(found_teams) >= 2:
         team_a, team_b = found_teams[0], found_teams[1]
         prediction = predict_match(team_a, team_b, teams)
+        comparison = compare_teams_frame(team_a, team_b)
+        edge_note = ""
+        if not comparison.empty:
+            edges = comparison.sort_values("gap", ascending=False).head(3)
+            edge_note = " Biggest model gaps: " + ", ".join(
+                f"{row.metric} edge {row.edge} by {row.gap:.1f}" for row in edges.itertuples()
+            ) + "."
         details = [
             f"{team_a} win {prediction['win_a']:.1%}",
             f"draw {prediction['draw']:.1%}",
@@ -695,7 +947,7 @@ def answer_match_assistant(query: str) -> str:
                     f"adjusted-form delta {row['opponent_adjusted_form_delta_a_minus_b']:.1f}, "
                     f"minimum data confidence {format_percent(row['data_confidence_min'])}."
                 )
-        return f"{team_a} vs {team_b}: " + ", ".join(details) + f". {prediction['explanation']}{feature_note}"
+        return f"{team_a} vs {team_b}: " + ", ".join(details) + f". {prediction['explanation']}{feature_note}{edge_note}"
 
     if len(found_teams) == 1:
         team = found_teams[0]
@@ -714,10 +966,14 @@ def answer_match_assistant(query: str) -> str:
     if any(word in q for word in ["moment", "event", "goal", "card", "report"]):
         return generate_match_report(events)
 
-    return (
-        "I can help with matchup probabilities, team strength, injuries/fitness, feature meaning, simulation runs, "
-        "data trust, and match-event reports. Try: 'Brazil vs Morocco', 'France fitness', or 'what does confidence mean?'"
-    )
+    if not round_probabilities.empty:
+        top = round_probabilities.sort_values("winner_probability", ascending=False).head(3)
+        leaders = ", ".join(f"{row.team} {row.winner_probability:.1%}" for row in top.itertuples())
+        return (
+            "I can answer winner, semi-finalist, bracket path, matchup, team comparison, explainable AI, fitness, "
+            f"and data trust questions. Current winner leaders: {leaders}."
+        )
+    return "I can answer prediction, comparison, explainability, simulation, fitness, and data-trust questions."
 
 
 def render_chatbot() -> None:
@@ -859,7 +1115,7 @@ health_label = "Model Data Health"
 st.markdown(
     f"""
     <div class="hero">
-        <div class="hero-title">World Cup 2026 AI Assistant</div>
+        <div class="hero-title">World Cup 2026 AI Predictor</div>
         <p class="hero-subtitle">
             Prediction, simulation, tactical event analysis, source governance, and model-ready feature engineering
             for the senior men's tournament.
@@ -897,10 +1153,76 @@ if not team_feature_store.empty:
     st.markdown(visual_html, unsafe_allow_html=True)
 
 tabs = st.tabs(
-    ["Teams", "Match Predictor", "Tournament Simulation", "Match Analysis", "Video Sources", "Feature Store", "Data Health"]
+    [
+        "Winner Probability",
+        "Teams",
+        "Team Comparison",
+        "Match Predictor",
+        "Explainable AI",
+        "Interactive Bracket",
+        "Tournament Simulation",
+        "Match Analysis",
+        "Video Sources",
+        "Feature Store",
+        "Data Health",
+    ]
 )
 
 with tabs[0]:
+    section_header("Winner Probability Chart", "A boardroom-ready view of tournament winner, finalist, and semi-final probabilities.")
+    if round_probabilities.empty:
+        st.info("No tournament probability file is loaded yet. Run `python3 scripts/build_tournament_predictions.py`.")
+    else:
+        probability_mode = st.radio(
+            "Probability view",
+            ["Winner", "Final", "Semi-final", "Quarter-final", "Round of 16"],
+            horizontal=True,
+        )
+        probability_column = {
+            "Winner": "winner_probability",
+            "Final": "final_probability",
+            "Semi-final": "semi_final_probability",
+            "Quarter-final": "quarter_final_probability",
+            "Round of 16": "round_of_16_probability",
+        }[probability_mode]
+        top_probability = round_probabilities.sort_values(probability_column, ascending=False).iloc[0]
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Top Team", top_probability["team"])
+        c2.metric(f"{probability_mode} Probability", f"{top_probability[probability_column]:.1%}")
+        c3.metric("Model Strength", f"{top_probability['model_strength_score']:.1f}")
+        c4.metric("Data Confidence", f"{top_probability['data_confidence_0_1']:.1%}")
+        chart = probability_chart_frame(round_probabilities, probability_column, top_n=16)
+        st.bar_chart(chart, height=360)
+        st.dataframe(
+            round_probabilities[
+                [
+                    "team",
+                    "group",
+                    "model_strength_score",
+                    "data_confidence_0_1",
+                    "semi_final_probability",
+                    "final_probability",
+                    "winner_probability",
+                ]
+            ].head(20),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "data_confidence_0_1": st.column_config.ProgressColumn("Confidence", min_value=0, max_value=1, format="%.1%"),
+                "semi_final_probability": st.column_config.ProgressColumn("SF", min_value=0, max_value=1, format="%.1%"),
+                "final_probability": st.column_config.ProgressColumn("Final", min_value=0, max_value=1, format="%.1%"),
+                "winner_probability": st.column_config.ProgressColumn("Winner", min_value=0, max_value=1, format="%.1%"),
+            },
+        )
+        st.download_button(
+            "Export winner probabilities CSV",
+            round_probabilities.to_csv(index=False).encode("utf-8"),
+            file_name="worldcup_2026_winner_probabilities.csv",
+            mime="text/csv",
+            use_container_width=True,
+        )
+
+with tabs[1]:
     section_header("Team Intelligence", "Scan group strength, FIFA rank, recent form, tactical style, and squad/scorer context.")
     photo_panel("Group-by-group football intelligence", "Ratings, form, tactical identity, and squad context layered over trusted data checks.")
     left, right = st.columns([2, 1])
@@ -972,7 +1294,50 @@ with tabs[0]:
             st.markdown("**Recent National Scorers**")
             st.dataframe(scorer_form[scorer_form["team"] == team].head(8), use_container_width=True, hide_index=True)
 
-with tabs[1]:
+with tabs[2]:
+    section_header("Team Comparison Engine", "Compare two national teams across model strength, tournament path, form, attack, defense, risk, and confidence.")
+    comp_a, comp_b = st.columns(2)
+    with comp_a:
+        compare_a = st.selectbox("Compare Team A", teams["team"].sort_values(), index=0)
+    with comp_b:
+        compare_b = st.selectbox("Compare Team B", teams["team"].sort_values(), index=1)
+    if compare_a == compare_b:
+        st.warning("Choose two different teams for comparison.")
+    else:
+        match_prediction = predict_match(compare_a, compare_b, teams)
+        row_a = team_feature_row(compare_a)
+        row_b = team_feature_row(compare_b)
+        rp_a = round_probability_row(compare_a)
+        rp_b = round_probability_row(compare_b)
+        st.markdown(
+            "<div class='comparison-grid'>"
+            f"<div class='compare-card'><h3>{html.escape(compare_a)}</h3>"
+            f"<div class='compare-row'><span>Strength</span><strong>{row_a['model_strength_score']:.1f}</strong></div>"
+            f"<div class='compare-row'><span>Winner</span><strong>{rp_a['winner_probability']:.1%}</strong></div>"
+            f"<div class='compare-row'><span>Semi-final</span><strong>{rp_a['semi_final_probability']:.1%}</strong></div>"
+            f"<div class='compare-row'><span>Confidence</span><strong>{row_a['data_confidence_0_1']:.1%}</strong></div>"
+            "</div>"
+            f"<div class='compare-card'><h3>{html.escape(compare_b)}</h3>"
+            f"<div class='compare-row'><span>Strength</span><strong>{row_b['model_strength_score']:.1f}</strong></div>"
+            f"<div class='compare-row'><span>Winner</span><strong>{rp_b['winner_probability']:.1%}</strong></div>"
+            f"<div class='compare-row'><span>Semi-final</span><strong>{rp_b['semi_final_probability']:.1%}</strong></div>"
+            f"<div class='compare-row'><span>Confidence</span><strong>{row_b['data_confidence_0_1']:.1%}</strong></div>"
+            "</div>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+        c1, c2, c3 = st.columns(3)
+        c1.metric(f"{compare_a} win", f"{match_prediction['win_a']:.1%}")
+        c2.metric("Draw", f"{match_prediction['draw']:.1%}")
+        c3.metric(f"{compare_b} win", f"{match_prediction['win_b']:.1%}")
+        st.markdown(f"<div class='insight-box'>{html.escape(str(match_prediction['explanation']))}</div>", unsafe_allow_html=True)
+        comparison = compare_teams_frame(compare_a, compare_b)
+        st.dataframe(comparison, use_container_width=True, hide_index=True)
+        if not comparison.empty:
+            chart_data = comparison.set_index("metric")[[compare_a, compare_b]]
+            st.bar_chart(chart_data, height=320)
+
+with tabs[3]:
     section_header("Match Predictor", "Compare two teams with win/draw/loss probabilities and model feature gaps.")
     col_a, col_b = st.columns(2)
     with col_a:
@@ -1031,7 +1396,62 @@ with tabs[1]:
                 hide_index=True,
             )
 
-with tabs[2]:
+with tabs[4]:
+    section_header("Explainable AI", "SHAP-style model driver view showing which features push a team's projection above or below baseline.")
+    explain_team = st.selectbox("Team to explain", teams["team"].sort_values(), index=0)
+    explanation = explain_team_features(explain_team)
+    rp = round_probability_row(explain_team)
+    row = team_feature_row(explain_team)
+    if explanation.empty or row is None:
+        st.info("Feature explanations are not available yet.")
+    else:
+        x1, x2, x3, x4 = st.columns(4)
+        x1.metric("Model Strength", f"{row['model_strength_score']:.1f}")
+        x2.metric("Winner", f"{rp['winner_probability']:.1%}" if rp is not None else "n/a")
+        x3.metric("Semi-final", f"{rp['semi_final_probability']:.1%}" if rp is not None else "n/a")
+        x4.metric("Confidence", f"{row['data_confidence_0_1']:.1%}")
+        st.markdown(
+            "<div class='insight-box'>This is an explainability layer built from the transparent feature weights used in the prototype. "
+            "It behaves like SHAP at the dashboard level by showing each feature's additive impact versus the tournament baseline.</div>",
+            unsafe_allow_html=True,
+        )
+        st.bar_chart(explanation.set_index("feature")["impact_points"], height=320)
+        st.dataframe(
+            explanation,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "impact_points": st.column_config.NumberColumn("Impact points", format="%+.2f"),
+                "raw_value": st.column_config.NumberColumn("Team value", format="%.3f"),
+                "baseline": st.column_config.NumberColumn("Tournament baseline", format="%.3f"),
+            },
+        )
+
+with tabs[5]:
+    section_header("Interactive Bracket", "Explore likely knockout paths and common scenario sets from the latest tournament simulation.")
+    st.markdown(bracket_html(), unsafe_allow_html=True)
+    if not tournament_scenarios.empty:
+        scenario_type = st.selectbox("Scenario type", sorted(tournament_scenarios["scenario_type"].dropna().unique()))
+        scenario_view = tournament_scenarios[tournament_scenarios["scenario_type"] == scenario_type].copy()
+        st.dataframe(
+            scenario_view.head(20),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "probability": st.column_config.ProgressColumn("Scenario probability", min_value=0, max_value=1, format="%.2%")
+            },
+        )
+        st.download_button(
+            "Export bracket scenarios CSV",
+            scenario_view.to_csv(index=False).encode("utf-8"),
+            file_name=f"worldcup_2026_{scenario_type}_scenarios.csv",
+            mime="text/csv",
+            use_container_width=True,
+        )
+    else:
+        st.info("No scenario file is loaded yet. Run `python3 scripts/build_tournament_predictions.py`.")
+
+with tabs[6]:
     section_header("Tournament Simulation", "Run repeated group-stage scenarios to estimate advancement and winner probabilities.")
     photo_panel("Tournament probability engine", "Monte Carlo-style group simulations turn match probabilities into qualification and winner projections.")
     iterations = st.slider("Simulation runs", min_value=100, max_value=3000, value=500, step=100)
@@ -1108,7 +1528,7 @@ with tabs[2]:
             st.markdown("**Common Scenario Sets**")
             st.dataframe(tournament_scenarios.head(12), use_container_width=True, hide_index=True)
 
-with tabs[3]:
+with tabs[7]:
     section_header("Match Analysis", "Turn structured event rows into top moments, momentum timeline, and post-match narrative.")
     match_ids = ["All"] + sorted(events["match_id"].dropna().unique().tolist()) if not events.empty else ["All"]
     selected_match = st.selectbox("Event feed", match_ids)
@@ -1131,7 +1551,7 @@ with tabs[3]:
         if not timeline.empty:
             st.line_chart(timeline.set_index("minute")["momentum"], height=220)
 
-with tabs[4]:
+with tabs[8]:
     section_header("Video Sources", "Strictly cleaned source links and metadata for senior men's football relevance.")
     photo_panel("Legit video intelligence layer", "Source links, embeds, platform rules, and metadata only: no copyrighted video downloads.")
     video_metrics = st.columns(4)
@@ -1187,7 +1607,7 @@ with tabs[4]:
     st.markdown("**Copyright-safe Analysis Design**")
     st.dataframe(video_analysis_design, use_container_width=True, hide_index=True)
 
-with tabs[5]:
+with tabs[9]:
     section_header("Feature Store", "Model-ready team and match features with reliability and risk signals.")
     if team_feature_store.empty:
         st.info("No feature store is loaded yet. Run `python3 scripts/build_feature_store.py` to generate it.")
@@ -1245,7 +1665,7 @@ with tabs[5]:
     st.markdown("**Trust Report**")
     st.dataframe(trust_report, use_container_width=True, hide_index=True)
 
-with tabs[6]:
+with tabs[10]:
     section_header("Data Health", "Audit the data pipeline, cleaning rules, validation checks, and known limitations.")
     photo_panel("Trust before prediction", "Every model-facing signal is checked for relevance, ranges, duplicates, leakage, and source reliability.")
     health_metrics = st.columns(5)

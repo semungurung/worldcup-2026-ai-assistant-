@@ -1,25 +1,25 @@
 scenario_type,teams,probability
-semi_finalists,Argentina | England | France | Spain,0.018
-semi_finalists,Argentina | France | Portugal | Spain,0.014
-semi_finalists,Argentina | France | Netherlands | Spain,0.012333333333333333
-semi_finalists,Argentina | England | France | Netherlands,0.009666666666666667
-semi_finalists,Argentina | England | France | Portugal,0.009333333333333334
-semi_finalists,Argentina | Belgium | France | Spain,0.008
-semi_finalists,Argentina | England | Portugal | Spain,0.007666666666666666
-semi_finalists,England | France | Portugal | Spain,0.007666666666666666
-semi_finalists,Argentina | Netherlands | Portugal | Spain,0.006666666666666667
-semi_finalists,Argentina | England | Netherlands | Spain,0.006333333333333333
-semi_finalists,Argentina | England | France | Morocco,0.006
-semi_finalists,Argentina | England | France | Germany,0.006
-finalists,Argentina | Spain,0.084
-finalists,France | Spain,0.07033333333333333
-finalists,Argentina | France,0.06333333333333334
-finalists,Argentina | England,0.042666666666666665
-finalists,England | France,0.03966666666666667
-finalists,England | Spain,0.03833333333333333
-finalists,France | Portugal,0.036333333333333336
-finalists,Portugal | Spain,0.036
-finalists,Argentina | Portugal,0.036
-finalists,Argentina | Netherlands,0.03166666666666667
-finalists,France | Netherlands,0.029
-finalists,Netherlands | Spain,0.02033333333333333
+semi_finalists,Argentina | England | France | Spain,0.013666666666666667
+semi_finalists,Argentina | England | Portugal | Spain,0.011333333333333334
+semi_finalists,Argentina | France | Germany | Spain,0.009333333333333334
+semi_finalists,Argentina | France | Portugal | Spain,0.009333333333333334
+semi_finalists,Argentina | Belgium | Portugal | Spain,0.008
+semi_finalists,Argentina | England | Netherlands | Spain,0.007666666666666666
+semi_finalists,Argentina | Brazil | Portugal | Spain,0.007333333333333333
+semi_finalists,Argentina | Brazil | France | Spain,0.007333333333333333
+semi_finalists,Argentina | Brazil | England | Spain,0.006666666666666667
+semi_finalists,Argentina | England | France | Portugal,0.006666666666666667
+semi_finalists,Argentina | Germany | Portugal | Spain,0.006666666666666667
+semi_finalists,Argentina | Netherlands | Portugal | Spain,0.006
+finalists,Argentina | Spain,0.07666666666666666
+finalists,Argentina | France,0.04633333333333333
+finalists,France | Spain,0.04533333333333334
+finalists,Argentina | Portugal,0.04466666666666667
+finalists,Argentina | England,0.044
+finalists,Portugal | Spain,0.04033333333333333
+finalists,England | Spain,0.034333333333333334
+finalists,England | France,0.03133333333333333
+finalists,France | Portugal,0.030666666666666665
+finalists,England | Portugal,0.028
+finalists,Argentina | Netherlands,0.027
+finalists,Argentina | Belgium,0.024333333333333332

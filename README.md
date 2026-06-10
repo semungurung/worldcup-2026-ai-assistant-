@@ -152,6 +152,77 @@ Advanced tournament prediction outputs:
 
 These add round-of-32, round-of-16, quarterfinal, semifinal, final, and winner probabilities for the AI assistant and dashboard. The current knockout path is an approximate seeded bracket until the full official bracket mapping is loaded.
 
+## Daily midnight automation
+
+The project includes a production-style local automation runner:
+
+```bash
+cd "/Users/semungurung/Documents/New project/worldcup_2026_ai_assistant"
+python3 scripts/automated_midnight_run.py
+```
+
+What it does every run:
+
+- updates public match/result/scorer data from configured sources
+- updates video-source metadata without downloading copyrighted videos
+- cleans and validates all model-facing datasets
+- rebuilds the feature store and tournament prediction outputs
+- writes detailed logs with start time, end time, warnings, errors, updated sources, and output summaries
+- retries the full pipeline once if the first attempt fails
+- restores the latest successful outputs if both attempts fail
+- writes an alert file if failure remains after retry
+
+Runtime files are written locally:
+
+- `logs/automation/<timestamp>/attempt_1/run.log`
+- `logs/automation/<timestamp>/attempt_1/run_summary.json`
+- `logs/automation/latest_run.json`
+- `archives/<timestamp>/previous_success/`
+- `archives/<timestamp>/successful_output/`
+- `alerts/automation_alert_<timestamp>.json`
+- `alerts/automation_alert_<timestamp>.txt`
+
+To send failure alerts to Slack, Discord, Zapier, Make, or another webhook receiver, set this environment variable before running or inside the scheduler environment:
+
+```bash
+export AUTOMATION_ALERT_WEBHOOK_URL="https://your-webhook-url"
+```
+
+### macOS midnight scheduler
+
+The scheduler template is:
+
+```text
+config/launchd/com.semungurung.worldcup2026.pipeline.plist
+```
+
+Install it with:
+
+```bash
+mkdir -p "$HOME/Library/LaunchAgents"
+cp "config/launchd/com.semungurung.worldcup2026.pipeline.plist" "$HOME/Library/LaunchAgents/"
+launchctl unload "$HOME/Library/LaunchAgents/com.semungurung.worldcup2026.pipeline.plist" 2>/dev/null || true
+launchctl load "$HOME/Library/LaunchAgents/com.semungurung.worldcup2026.pipeline.plist"
+```
+
+Confirm it is loaded:
+
+```bash
+launchctl list | grep worldcup2026
+```
+
+Run it manually once:
+
+```bash
+launchctl start com.semungurung.worldcup2026.pipeline
+```
+
+The schedule is daily at `12:00 AM` local machine time. If your Python path changes, update the first `ProgramArguments` value in the plist. The current template uses:
+
+```text
+/Library/Frameworks/Python.framework/Versions/3.11/bin/python3
+```
+
 ## Data notes
 
 The qualified-team list and opening fixture seed rows follow FIFA's current World Cup 2026 team and schedule pages as checked on May 9, 2026. Squad/player rows are placeholders because final 26-player squads and late injury status are live-update data.
