@@ -118,31 +118,9 @@ st.markdown(
         background: rgba(248, 251, 255, 0.86);
         backdrop-filter: blur(8px);
     }
-    section[data-testid="stSidebar"] {
-        left: auto;
-        right: 0;
-        border-left: 1px solid rgba(213, 222, 232, 0.92);
-        border-right: none;
-        box-shadow: -18px 0 40px rgba(7, 20, 34, 0.14);
-    }
-    section[data-testid="stSidebar"] > div {
-        background:
-            linear-gradient(180deg, rgba(255,255,255,0.98), rgba(243,248,252,0.98));
-    }
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] span {
-        color: #101827;
-    }
     @media (min-width: 1100px) {
         .block-container {
-            padding-right: min(23.5rem, 24vw);
-        }
-        section[data-testid="stSidebar"] {
-            width: min(22.5rem, 24vw) !important;
+            padding-left: 4.8rem;
         }
     }
     h1, h2, h3 {
@@ -479,12 +457,6 @@ st.markdown(
         gap: clamp(0.6rem, 1.5vw, 1rem);
     }
     @media (max-width: 1099px) {
-        section[data-testid="stSidebar"] {
-            left: 0;
-            right: auto;
-            border-left: none;
-            box-shadow: 12px 0 32px rgba(7, 20, 34, 0.14);
-        }
         .block-container {
             max-width: min(100vw - 1.25rem, 1120px);
             padding-left: 0.75rem;
@@ -492,6 +464,12 @@ st.markdown(
         }
     }
     @media (max-width: 900px) {
+        div[data-testid="stHorizontalBlock"] {
+            flex-direction: column;
+        }
+        div[data-testid="stHorizontalBlock"] > div {
+            width: 100% !important;
+        }
         .hero {
             min-height: 300px;
             padding: 1.15rem;
@@ -515,6 +493,9 @@ st.markdown(
         .stApp {
             background-attachment: scroll;
         }
+        [data-testid="stHeader"] {
+            height: 2.4rem;
+        }
         .app-bg-image {
             opacity: 0.45;
             height: 100%;
@@ -523,17 +504,21 @@ st.markdown(
             max-width: 100vw;
             padding-left: 0.55rem;
             padding-right: 0.55rem;
+            padding-top: 0.65rem;
         }
         .hero {
-            min-height: 260px;
-            padding: 1rem;
+            min-height: 210px;
+            padding: 0.85rem;
             margin-bottom: 0.75rem;
         }
         .hero-title {
-            font-size: 1.55rem;
+            font-size: 1.42rem;
         }
         .hero-subtitle {
-            font-size: 0.88rem;
+            font-size: 0.82rem;
+        }
+        .hero-row {
+            display: none;
         }
         .section-card,
         .visual-tile,
@@ -541,20 +526,97 @@ st.markdown(
         .pitch-card {
             border-radius: 8px;
         }
+        .section-card {
+            padding: 0.72rem;
+        }
+        .section-title {
+            font-size: 0.92rem;
+        }
+        .section-note {
+            font-size: 0.78rem;
+        }
+        div[data-testid="stTabs"] {
+            padding: 0.22rem 0.28rem 0 0.28rem;
+            margin-bottom: 0.5rem;
+        }
+        div[data-testid="stTabs"] [role="tablist"] {
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            gap: 0.1rem;
+            scrollbar-width: thin;
+        }
         div[data-testid="stTabs"] button {
-            padding: 0.45rem 0.65rem;
-            font-size: 0.86rem;
+            min-width: max-content;
+            padding: 0.42rem 0.52rem;
+            font-size: 0.78rem;
         }
         div[data-testid="stMetric"] {
+            padding: 0.62rem;
+        }
+        div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+            font-size: 1.25rem;
+        }
+        .photo-panel {
+            min-height: 130px;
             padding: 0.7rem;
+        }
+        .photo-panel > div {
+            padding: 0.62rem 0.7rem;
+        }
+        .photo-panel strong {
+            font-size: 1rem;
+        }
+        .photo-panel span {
+            font-size: 0.78rem;
+        }
+        .comparison-grid,
+        .bracket-grid,
+        .visual-grid {
+            grid-template-columns: 1fr;
+            gap: 0.55rem;
         }
         .pitch-overlay strong {
             font-size: 1.05rem;
+        }
+        div[data-testid="stDataFrame"] {
+            font-size: 0.78rem;
         }
     }
     .small-muted {
         color: var(--wc-muted);
         font-size: 0.82rem;
+    }
+    div[data-testid="stPopover"] {
+        position: fixed;
+        left: 0.8rem;
+        top: 45%;
+        z-index: 9999;
+    }
+    div[data-testid="stPopover"] > button {
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 999px;
+        background: #0c6943;
+        color: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.92);
+        box-shadow: 0 14px 36px rgba(3, 13, 23, 0.34);
+        font-weight: 900;
+        padding: 0;
+    }
+    div[data-testid="stPopover"] > button:hover {
+        background: #0f7f52;
+        color: #ffffff;
+    }
+    @media (max-width: 620px) {
+        div[data-testid="stPopover"] {
+            left: 0.55rem;
+            bottom: 1rem;
+            top: auto;
+        }
+        div[data-testid="stPopover"] > button {
+            width: 3rem;
+            height: 3rem;
+        }
     }
     .comparison-grid {
         display: grid;
@@ -976,37 +1038,51 @@ def answer_match_assistant(query: str) -> str:
     return "I can answer prediction, comparison, explainability, simulation, fitness, and data-trust questions."
 
 
-def render_chatbot() -> None:
-    with st.sidebar:
+def ensure_chat_history() -> None:
+    if "match_chat_history" not in st.session_state:
+        st.session_state.match_chat_history = [
+            ("assistant", "Hi, I can explain match predictions, team features, simulations, injuries, and event reports.")
+        ]
+
+
+def render_chat_controls(key_prefix: str) -> None:
+    ensure_chat_history()
+    for role, message in st.session_state.match_chat_history[-6:]:
+        with st.chat_message(role):
+            st.write(message)
+    suggested = st.selectbox(
+        "Quick question",
+        [
+            "",
+            "Brazil vs Morocco",
+            "Possible 4 semi-finalists",
+            "Most likely winner",
+            "Dark horse teams",
+            "France fitness",
+            "What does simulation runs mean?",
+            "What does data confidence mean?",
+            "Show match event report",
+        ],
+        key=f"{key_prefix}_suggested",
+    )
+    query = st.text_input(
+        "Your question",
+        value=suggested,
+        placeholder="Ask about a team or match...",
+        key=f"{key_prefix}_query",
+    )
+    if st.button("Ask AI Assistant", use_container_width=True, key=f"{key_prefix}_button"):
+        answer = answer_match_assistant(query)
+        st.session_state.match_chat_history.append(("user", query))
+        st.session_state.match_chat_history.append(("assistant", answer))
+        st.rerun()
+
+
+def render_floating_chatbot() -> None:
+    with st.popover("💬", help="Open AI Match Assistant"):
         st.markdown("### AI Match Assistant")
         st.caption("Ask about matches, teams, simulation, data trust, or confusing model signals.")
-        if "match_chat_history" not in st.session_state:
-            st.session_state.match_chat_history = [
-                ("assistant", "Hi, I can explain match predictions, team features, simulations, injuries, and event reports.")
-            ]
-        for role, message in st.session_state.match_chat_history[-6:]:
-            with st.chat_message(role):
-                st.write(message)
-        suggested = st.selectbox(
-            "Quick question",
-            [
-                "",
-                "Brazil vs Morocco",
-                "Possible 4 semi-finalists",
-                "Most likely winner",
-                "Dark horse teams",
-                "France fitness",
-                "What does simulation runs mean?",
-                "What does data confidence mean?",
-                "Show match event report",
-            ],
-        )
-        query = st.text_input("Your question", value=suggested, placeholder="Ask about a team or match...")
-        if st.button("Ask AI Assistant", use_container_width=True):
-            answer = answer_match_assistant(query)
-            st.session_state.match_chat_history.append(("user", query))
-            st.session_state.match_chat_history.append(("assistant", answer))
-            st.rerun()
+        render_chat_controls("floating_chat")
 
 
 @st.cache_data
@@ -1103,7 +1179,7 @@ def load_all() -> tuple[pd.DataFrame, ...]:
     prediction_summary,
 ) = load_all()
 
-render_chatbot()
+render_floating_chatbot()
 
 validation_failures = int((validation_report["status"] == "fail").sum()) if not validation_report.empty else 0
 validation_warnings = int((validation_report["status"] == "warn").sum()) if not validation_report.empty else 0
@@ -1131,26 +1207,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-top_cols = st.columns(5)
-top_cols[0].metric("Teams", f"{len(teams)}")
-top_cols[1].metric("Feature Columns", f"{len(team_feature_store.columns) if not team_feature_store.empty else 0}")
-top_cols[2].metric("Validation", f"{validation_failures} fail", f"{validation_warnings} warn")
-top_cols[3].metric("Trust Checks", f"{trust_failures} fail", f"{trust_warnings} warn")
-top_cols[4].metric("Clean Videos", f"{len(video_metadata)}")
-
-if not team_feature_store.empty:
-    top_team = team_feature_store.iloc[0]
-    avg_confidence = team_feature_store["data_confidence_0_1"].mean()
-    visual_html = (
-        "<div class='visual-grid'>"
-        + visual_tile("Top Model Team", str(top_team["team"]), f"Strength {top_team['model_strength_score']:.1f}")
-        + visual_tile("Average Confidence", format_percent(avg_confidence), "Across all qualified teams")
-        + visual_tile("Strict Video Rows", str(len(video_metadata)), "Senior men's relevance filter")
-        + visual_tile("Validation State", f"{validation_failures} fail", f"{validation_warnings} warnings to monitor")
-        + "</div>"
-    )
-    st.markdown(visual_html, unsafe_allow_html=True)
 
 tabs = st.tabs(
     [
